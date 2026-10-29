@@ -4,12 +4,7 @@ import interpreter.model.prgState.ProgramState;
 import interpreter.exceptions.VariableAlreadyDefinedException;
 import interpreter.model.type.IType;
 
-public record VariableDeclarationStmt(IType type, String variableName) implements IStmt {
-    public VariableDeclarationStmt(IType type, String variableName) {
-        this.type = type;
-        this.variableName = variableName;
-    }
-
+public record VariableDeclarationStmt(String variableName,IType type) implements IStmt {
 
     @Override
     public ProgramState execute(ProgramState programState) {

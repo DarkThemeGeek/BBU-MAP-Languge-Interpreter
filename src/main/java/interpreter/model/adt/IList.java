@@ -8,4 +8,5 @@ public interface IList<T> {
     int size();
     boolean isEmpty();
     List<T> getList();
+
 }

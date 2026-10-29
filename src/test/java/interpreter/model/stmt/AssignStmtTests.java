@@ -38,7 +38,7 @@ class AssignStmtTests {
         ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))));
         
         // Declare x as int
-        VariableDeclarationStmt declStmt = new VariableDeclarationStmt(new IntType(), "x");
+        VariableDeclarationStmt declStmt = new VariableDeclarationStmt( "x",new IntType());
         declStmt.execute(state);
         
         // Try to assign boolean to int
@@ -53,7 +53,7 @@ class AssignStmtTests {
         MyList<IValue> out = new MyList<>();
         ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))));
         
-        VariableDeclarationStmt declStmt = new VariableDeclarationStmt(new IntType(), "x");
+        VariableDeclarationStmt declStmt = new VariableDeclarationStmt( "x",new IntType());
         declStmt.execute(state);
         
         // Expression has wrong operand type

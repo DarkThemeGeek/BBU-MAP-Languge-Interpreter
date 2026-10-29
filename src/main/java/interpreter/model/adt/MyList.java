@@ -35,4 +35,5 @@ public class MyList<T> implements IList<T>{
     public List<T> getList() {
         return list;
     }
+    public String toString(){return list.toString();}
 }

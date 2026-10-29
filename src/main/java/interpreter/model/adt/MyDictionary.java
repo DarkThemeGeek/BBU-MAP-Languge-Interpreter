@@ -10,7 +10,7 @@ import java.util.Set;
 public class MyDictionary<TKey,TValue> implements  IDictionary<TKey,TValue>{
     private Map<TKey,TValue> map;
 
-    MyDictionary (){
+    public MyDictionary (){
         map=new HashMap<>();
     }
 
