@@ -13,5 +13,5 @@ public interface IDictionary<TKey,TValue>  {
     boolean isEmpty();
     IDictionary<TKey, TValue> copy();
     Set<TKey> keySet();
-
+    Map<TKey,TValue> toMap();
 }

@@ -3,6 +3,7 @@ package interpreter.model.adt;
 
 import interpreter.exceptions.NotAKeyException;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -64,6 +65,16 @@ public class MyDictionary<TKey,TValue> implements  IDictionary<TKey,TValue>{
     @Override
     public Set<TKey> keySet() {
         return map.keySet();
+    }
+
+    @Override
+    public Map<TKey, TValue> toMap() {
+        Map<TKey, TValue> newDict = new HashMap<>();
+        for (TKey key : map.keySet()) {
+            newDict.put(key, map.get(key));
+        }
+
+        return Map.copyOf(Map.copyOf(newDict));
     }
 
     @Override
