@@ -9,5 +9,8 @@ public interface IStack<T> {
     boolean isEmpty();
     int size();
     T peek();
+    //mutable list
     List<T> getStack();
+    //immutable lst
+    List<T> toStack();
 }

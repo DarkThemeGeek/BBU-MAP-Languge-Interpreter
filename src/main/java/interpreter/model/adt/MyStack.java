@@ -34,6 +34,11 @@ public class MyStack<T> implements IStack<T> {
         return stack.stream().toList();
     }
 
+    @Override
+    public List<T> toStack() {
+        return List.copyOf(stack);
+    }
+
     @Override public String toString() { return stack.toString(); }
 
 }

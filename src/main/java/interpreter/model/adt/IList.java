@@ -7,6 +7,8 @@ public interface IList<T> {
     T get(int index);
     int size();
     boolean isEmpty();
+    //mutable list
     List<T> getList();
-
+    //imutable list
+    List<T> toList();
 }
