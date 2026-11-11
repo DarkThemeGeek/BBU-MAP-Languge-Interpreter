@@ -11,26 +11,23 @@ import interpreter.view.old.Logger;
 
 public class Controller {
     private IRepo repo;
-    private ILogger logger;
-
+    private boolean displayFlag;
     public final IRepo getRepo(){
         return repo;
     }
     public boolean isDisplayFlag() {
-        return logger.isDisplayFlag();
+        return displayFlag;
     }
     public void setDisplayFlag(boolean displayFlag) {
-        this.logger.setDisplayFlag(displayFlag);
+        this.displayFlag=displayFlag;
     }
     public Controller(boolean displayFlag) {
         repo =new Repo(null,"");
-        logger=new Logger();
-        this.logger.setDisplayFlag(displayFlag);
+        this.displayFlag=displayFlag;
     }
     public Controller(Repo repo,boolean displayFlag){
         this.repo =repo;
-        logger=new Logger();
-        this.logger.setDisplayFlag(displayFlag);
+        this.displayFlag=displayFlag;
     }
 
     public ProgramState oneStep() throws MyException {
@@ -45,12 +42,18 @@ public class Controller {
     }
     public void allStep() throws MyException {
         ProgramState state = repo.getProgramState();
-        logger.log(state.toString()); // only if the display flag is on
+        if(displayFlag){
+            repo.logProgramStateExec();
+            // repo.logToConsole();
+        }; // only if the display flag is on
 
         while (!state.getExeStack().isEmpty()) {
 
             oneStep();
-            logger.log(state.toString());
+            if(displayFlag){
+                repo.logProgramStateExec();
+              //  repo.logToConsole();
+            };
         }
     }
     public void LoadProgram(IStmt program){

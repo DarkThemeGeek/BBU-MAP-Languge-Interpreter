@@ -50,6 +50,12 @@ public class Repo implements IRepo{
                     + ": " + e.getMessage());
         }
     }
+
+    @Override
+    public void logToConsole() {
+        IO.println(currentProgramState.toString());
+    }
+
     public final List<ProgramState> getSavedProgramStates(List<ProgramState> savedProgramStates) {
         return savedProgramStates;
     }

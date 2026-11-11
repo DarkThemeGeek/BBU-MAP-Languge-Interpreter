@@ -11,5 +11,6 @@ public interface IRepo {
     public void loadProgram(IStmt program);
     public void updateState(ProgramState programState);
     public void logProgramStateExec() throws MyException;
+    public void logToConsole();
     public List<ProgramState> getSavedProgramStates(List<ProgramState> savedProgramStates);
 }
