@@ -1,6 +1,7 @@
 package interpreter.model.adt;
 
 
+import interpreter.exceptions.MyException;
 import interpreter.exceptions.NotAKeyException;
 
 import java.util.Dictionary;
@@ -21,7 +22,7 @@ public class MyDictionary<TKey,TValue> implements  IDictionary<TKey,TValue>{
     }
 
     @Override
-    public TValue get(TKey key) {
+    public TValue get(TKey key) throws MyException {
         if (!map.containsKey(key)) {
             throw new NotAKeyException("Wrong key"+key);
         }
@@ -69,12 +70,7 @@ public class MyDictionary<TKey,TValue> implements  IDictionary<TKey,TValue>{
 
     @Override
     public Map<TKey, TValue> toMap() {
-        Map<TKey, TValue> newDict = new HashMap<>();
-        for (TKey key : map.keySet()) {
-            newDict.put(key, map.get(key));
-        }
-
-        return Map.copyOf(Map.copyOf(newDict));
+      return Map.copyOf(map);
     }
 
     @Override

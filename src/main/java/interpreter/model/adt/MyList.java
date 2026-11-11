@@ -35,5 +35,11 @@ public class MyList<T> implements IList<T>{
     public List<T> getList() {
         return list;
     }
+
+    @Override
+    public List<T> toList() {
+        return List.copyOf(list);
+    }
+
     public String toString(){return list.toString();}
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public class MyStack<T> implements IStack<T> {
     private final Deque<T> stack = new ArrayDeque<>(); // java.util
     @Override public void push(T v) { stack.push(v); }
-    @Override public T pop(){
+    @Override public T pop() throws EmptyStackException {
         if (stack.isEmpty()) throw new EmptyStackException("Pop from an empty stack");
         return stack.pop();
     }
@@ -27,7 +27,7 @@ public class MyStack<T> implements IStack<T> {
     }
 
     @Override
-    public List<T> getStack() {
+    public List<T> getStack() throws EmptyStackException {
         if (stack.isEmpty()) {
             throw new EmptyStackException("Nothing to get");
         }
@@ -35,7 +35,7 @@ public class MyStack<T> implements IStack<T> {
     }
 
     @Override
-    public List<T> toStack() {
+    public List<T> toList() {
         return List.copyOf(stack);
     }
 
