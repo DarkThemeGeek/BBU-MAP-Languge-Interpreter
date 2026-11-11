@@ -10,27 +10,12 @@ import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import interpreter.exceptions.MyException;
 
 class LogicalExpTests {
-    @Test
-    void testEqualOperator() {
-        IDictionary<String, IValue> symTable = new MyDictionary<>();
-        LogicalExp exp = new LogicalExp(LogicalOp.EQUAL, new ValueExp(new BoolValue(true)), new ValueExp(new BoolValue(true)));
-        IValue result = exp.eval(symTable);
-        assertTrue(result instanceof BoolValue);
-        assertTrue(((BoolValue) result).val());
-    }
 
     @Test
-    void testNotEqualOperator() {
-        IDictionary<String, IValue> symTable = new MyDictionary<>();
-        LogicalExp exp = new LogicalExp(LogicalOp.NOT_EQUAL, new ValueExp(new BoolValue(true)), new ValueExp(new BoolValue(false)));
-        IValue result = exp.eval(symTable);
-        assertTrue(((BoolValue) result).val());
-    }
-
-    @Test
-    void testAndOperator() {
+    void testAndOperator() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         LogicalExp exp1 = new LogicalExp(LogicalOp.AND, new ValueExp(new BoolValue(true)), new ValueExp(new BoolValue(true)));
         assertTrue(((BoolValue) exp1.eval(symTable)).val());
@@ -43,7 +28,7 @@ class LogicalExpTests {
     }
 
     @Test
-    void testOrOperator() {
+    void testOrOperator() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         LogicalExp exp1 = new LogicalExp(LogicalOp.OR, new ValueExp(new BoolValue(true)), new ValueExp(new BoolValue(false)));
         assertTrue(((BoolValue) exp1.eval(symTable)).val());
@@ -56,28 +41,28 @@ class LogicalExpTests {
     }
 
     @Test
-    void testWrongOperandTypeFirstOperandThrows() {
+    void testWrongOperandTypeFirstOperandThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         LogicalExp exp = new LogicalExp(LogicalOp.AND, new ValueExp(new IntValue(1)), new ValueExp(new BoolValue(true)));
         assertThrows(InvalidTypeException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testWrongOperandTypeSecondOperandThrows() {
+    void testWrongOperandTypeSecondOperandThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         LogicalExp exp = new LogicalExp(LogicalOp.OR, new ValueExp(new BoolValue(false)), new ValueExp(new IntValue(0)));
         assertThrows(InvalidTypeException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testBothOperandsWrongTypeThrows() {
+    void testBothOperandsWrongTypeThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
-        LogicalExp exp = new LogicalExp(LogicalOp.EQUAL, new ValueExp(new IntValue(1)), new ValueExp(new IntValue(2)));
+        LogicalExp exp = new LogicalExp(LogicalOp.AND, new ValueExp(new IntValue(1)), new ValueExp(new IntValue(2)));
         assertThrows(InvalidTypeException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testWithVariableExp() {
+    void testWithVariableExp() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         symTable.add("b1", new BoolValue(true));
         symTable.add("b2", new BoolValue(false));
@@ -86,20 +71,18 @@ class LogicalExpTests {
     }
 
     @Test
-    void testUndefinedVariableInLogicalExpThrows() {
+    void testUndefinedVariableInLogicalExpThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         LogicalExp exp = new LogicalExp(LogicalOp.AND, new VariableExp("flag"), new ValueExp(new BoolValue(true)));
         assertThrows(VariableNotDefinedException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testAllOperators() {
+    void testAllOperators() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         symTable.add("t", new BoolValue(true));
         symTable.add("f", new BoolValue(false));
 
-        assertTrue(((BoolValue) new LogicalExp(LogicalOp.EQUAL, new VariableExp("t"), new ValueExp(new BoolValue(true))).eval(symTable)).val());
-        assertTrue(((BoolValue) new LogicalExp(LogicalOp.NOT_EQUAL, new VariableExp("t"), new VariableExp("f")).eval(symTable)).val());
         assertFalse(((BoolValue) new LogicalExp(LogicalOp.AND, new VariableExp("t"), new VariableExp("f")).eval(symTable)).val());
         assertTrue(((BoolValue) new LogicalExp(LogicalOp.OR, new VariableExp("t"), new VariableExp("f")).eval(symTable)).val());
     }

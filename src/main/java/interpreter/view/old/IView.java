@@ -1,4 +1,4 @@
-package interpreter.view;
+package interpreter.view.old;
 
 import interpreter.model.prgState.ProgramState;
 

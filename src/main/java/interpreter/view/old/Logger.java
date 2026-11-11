@@ -1,4 +1,4 @@
-package interpreter.view;
+package interpreter.view.old;
 
 public class Logger implements  ILogger {
     private  boolean displayFlag;

@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import interpreter.exceptions.MyException;
 
 class ListTests {
     @Test
-    void testAddGetSize() {
+    void testAddGetSize() throws MyException {
         IList<Integer> list = new MyList<>();
         assertTrue(list.isEmpty());
         assertEquals(0, list.size());
@@ -25,14 +26,14 @@ class ListTests {
     }
 
     @Test
-    void testGetWithNegativeIndexThrows() {
+    void testGetWithNegativeIndexThrows() throws MyException {
         IList<String> list = new MyList<>();
         list.add("test");
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1));
     }
 
     @Test
-    void testGetWithIndexOutOfBoundsThrows() {
+    void testGetWithIndexOutOfBoundsThrows() throws MyException {
         IList<String> list = new MyList<>();
         list.add("test");
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(1));
@@ -40,13 +41,13 @@ class ListTests {
     }
 
     @Test
-    void testGetFromEmptyListThrows() {
+    void testGetFromEmptyListThrows() throws MyException {
         IList<Integer> list = new MyList<>();
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(0));
     }
 
     @Test
-    void testGetList() {
+    void testGetList() throws MyException {
         IList<String> list = new MyList<>();
         list.add("hello");
         list.add("world");
@@ -56,4 +57,5 @@ class ListTests {
         assertEquals("hello", internalList.get(0));
         assertEquals("world", internalList.get(1));
     }
+
 }

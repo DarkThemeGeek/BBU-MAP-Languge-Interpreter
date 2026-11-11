@@ -1,6 +1,7 @@
 package interpreter.model.exp;
 
 import interpreter.exceptions.InvalidTypeException;
+import interpreter.exceptions.MyException;
 import interpreter.model.adt.IDictionary;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
@@ -8,7 +9,7 @@ import interpreter.model.value.IValue;
 public record LogicalExp(LogicalOp op,IExp left, IExp right) implements  IExp {
 
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable) {
+    public IValue eval(IDictionary<String, IValue> symTable) throws MyException {
         if (!(left.eval(symTable) instanceof BoolValue(boolean n1)))
             throw new InvalidTypeException("first operand is not an integer");
         if (!(right.eval(symTable) instanceof BoolValue(boolean n2)))
