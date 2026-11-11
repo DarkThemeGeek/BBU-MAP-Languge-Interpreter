@@ -9,10 +9,11 @@ import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import interpreter.exceptions.MyException;
 
 class VariableExpTests {
     @Test
-    void testEvalDefinedVariable() {
+    void testEvalDefinedVariable() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         symTable.add("x", new IntValue(42));
         VariableExp exp = new VariableExp("x");
@@ -21,14 +22,14 @@ class VariableExpTests {
     }
 
     @Test
-    void testEvalUndefinedVariableThrows() {
+    void testEvalUndefinedVariableThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         VariableExp exp = new VariableExp("y");
         assertThrows(VariableNotDefinedException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testEvalDifferentVariableTypes() {
+    void testEvalDifferentVariableTypes() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         symTable.add("a", new IntValue(100));
         symTable.add("b", new BoolValue(true));
@@ -38,7 +39,7 @@ class VariableExpTests {
     }
 
     @Test
-    void testToString() {
+    void testToString() throws MyException {
         VariableExp exp = new VariableExp("myVar");
         assertEquals("myVar", exp.toString());
     }

@@ -1,5 +1,6 @@
 package interpreter.model.stmt;
 
+import interpreter.exceptions.MyException;
 import interpreter.model.prgState.ProgramState;
 import interpreter.exceptions.InvalidTypeException;
 import interpreter.exceptions.VariableNotDefinedException;
@@ -8,7 +9,7 @@ import interpreter.model.value.IValue;
 
 public record AssignStmt(String varName, IExp exp) implements IStmt {
         @Override
-        public ProgramState execute(ProgramState state)  {
+        public ProgramState execute(ProgramState state)  throws MyException {
 
             var symTable = state.getSymTable();
 

@@ -7,10 +7,11 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import interpreter.exceptions.MyException;
 
 class DictTests {
     @Test
-    void testAddAndGet() {
+    void testAddAndGet() throws MyException {
         IDictionary<String, Integer> dict = new MyDictionary<>();
 
         dict.add("Hello", 1);
@@ -82,7 +83,7 @@ class DictTests {
     }
 
     @Test
-    void testCopy() {
+    void testCopy() throws MyException {
         IDictionary<String, Integer> dict = new MyDictionary<>();
         dict.add("a", 1);
         dict.add("b", 2);

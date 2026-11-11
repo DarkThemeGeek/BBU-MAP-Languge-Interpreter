@@ -6,16 +6,16 @@ import interpreter.model.prgState.ProgramState;
 import interpreter.model.stmt.IStmt;
 import interpreter.repository.IRepo;
 import interpreter.repository.Repo;
-import interpreter.view.ILogger;
-import interpreter.view.IView;
-import interpreter.view.Logger;
-import interpreter.view.View;
+import interpreter.view.old.ILogger;
+import interpreter.view.old.Logger;
 
 public class Controller {
     private IRepo repo;
     private ILogger logger;
 
-
+    public final IRepo getRepo(){
+        return repo;
+    }
     public boolean isDisplayFlag() {
         return logger.isDisplayFlag();
     }
@@ -23,7 +23,12 @@ public class Controller {
         this.logger.setDisplayFlag(displayFlag);
     }
     public Controller(boolean displayFlag) {
-        repo =new Repo(null);
+        repo =new Repo(null,"");
+        logger=new Logger();
+        this.logger.setDisplayFlag(displayFlag);
+    }
+    public Controller(Repo repo,boolean displayFlag){
+        this.repo =repo;
         logger=new Logger();
         this.logger.setDisplayFlag(displayFlag);
     }
@@ -43,12 +48,13 @@ public class Controller {
         logger.log(state.toString()); // only if the display flag is on
 
         while (!state.getExeStack().isEmpty()) {
+
             oneStep();
             logger.log(state.toString());
         }
     }
     public void LoadProgram(IStmt program){
-        repo.LoadProgram(program);
+        repo.loadProgram(program);
     }
 
 

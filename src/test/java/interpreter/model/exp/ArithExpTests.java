@@ -11,10 +11,11 @@ import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import interpreter.exceptions.MyException;
 
 class ArithExpTests {
     @Test
-    void testAddOperator() {
+    void testAddOperator() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.ADD, new ValueExp(new IntValue(5)), new ValueExp(new IntValue(3)));
         IValue result = exp.eval(symTable);
@@ -23,7 +24,7 @@ class ArithExpTests {
     }
 
     @Test
-    void testSubOperator() {
+    void testSubOperator() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.SUB, new ValueExp(new IntValue(10)), new ValueExp(new IntValue(4)));
         IValue result = exp.eval(symTable);
@@ -31,7 +32,7 @@ class ArithExpTests {
     }
 
     @Test
-    void testMulOperator() {
+    void testMulOperator() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.MUL, new ValueExp(new IntValue(7)), new ValueExp(new IntValue(3)));
         IValue result = exp.eval(symTable);
@@ -39,7 +40,7 @@ class ArithExpTests {
     }
 
     @Test
-    void testDivOperator() {
+    void testDivOperator() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.DIV, new ValueExp(new IntValue(10)), new ValueExp(new IntValue(2)));
         IValue result = exp.eval(symTable);
@@ -47,35 +48,35 @@ class ArithExpTests {
     }
 
     @Test
-    void testDivisionByZeroThrows() {
+    void testDivisionByZeroThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.DIV, new ValueExp(new IntValue(10)), new ValueExp(new IntValue(0)));
         assertThrows(DivisionByZeroException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testWrongOperandTypeFirstOperandThrows() {
+    void testWrongOperandTypeFirstOperandThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.ADD, new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(3)));
         assertThrows(InvalidTypeException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testWrongOperandTypeSecondOperandThrows() {
+    void testWrongOperandTypeSecondOperandThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.MUL, new ValueExp(new IntValue(3)), new ValueExp(new BoolValue(false)));
         assertThrows(InvalidTypeException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testBothOperandsWrongTypeThrows() {
+    void testBothOperandsWrongTypeThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.SUB, new ValueExp(new BoolValue(true)), new ValueExp(new BoolValue(false)));
         assertThrows(InvalidTypeException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testWithVariableExp() {
+    void testWithVariableExp() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         symTable.add("x", new IntValue(5));
         symTable.add("y", new IntValue(7));
@@ -85,14 +86,14 @@ class ArithExpTests {
     }
 
     @Test
-    void testUndefinedVariableInArithExpThrows() {
+    void testUndefinedVariableInArithExpThrows() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ArithExp exp = new ArithExp(ArithOp.ADD, new VariableExp("x"), new ValueExp(new IntValue(3)));
         assertThrows(VariableNotDefinedException.class, () -> exp.eval(symTable));
     }
 
     @Test
-    void testAllOperatorsWithVariables() {
+    void testAllOperatorsWithVariables() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         symTable.add("a", new IntValue(20));
         symTable.add("b", new IntValue(4));
@@ -104,7 +105,7 @@ class ArithExpTests {
     }
 
     @Test
-    void testToString() {
+    void testToString() throws MyException {
         ArithExp exp = new ArithExp(ArithOp.ADD, new ValueExp(new IntValue(1)), new ValueExp(new IntValue(2)));
         assertNotNull(exp.toString());
     }

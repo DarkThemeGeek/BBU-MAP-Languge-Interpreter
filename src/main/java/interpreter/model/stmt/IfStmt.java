@@ -1,5 +1,6 @@
 package interpreter.model.stmt;
 
+import interpreter.exceptions.MyException;
 import interpreter.model.prgState.ProgramState;
 import interpreter.exceptions.InvalidTypeException;
 import interpreter.model.exp.IExp;
@@ -11,7 +12,7 @@ public record IfStmt(IExp condition, IStmt stmt1, IStmt stmt2) implements  IStmt
 
 
     @Override
-    public ProgramState execute(ProgramState programState) {
+    public ProgramState execute(ProgramState programState)throws MyException {
         IValue value = condition.eval(programState.getSymTable());
         if (!(value instanceof BoolValue(boolean booleanValue))) {
             throw new InvalidTypeException(condition.toString()+"Is not of type boolean");

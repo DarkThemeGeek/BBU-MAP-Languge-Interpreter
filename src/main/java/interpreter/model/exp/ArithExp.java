@@ -10,7 +10,7 @@ import java.util.Map;
 
 public record ArithExp(ArithOp op, IExp left, IExp right) implements IExp {
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable)  {
+    public IValue eval(IDictionary<String, IValue> symTable) throws MyException {
 
         if (!(left.eval(symTable) instanceof IntValue(int n1)))
             throw new InvalidTypeException("first operand is not an integer");

@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import interpreter.exceptions.MyException;
 
 class StackTests {
     @Test
-    void testPushPopAndSize() {
+    void testPushPopAndSize() throws MyException {
         IStack<Integer> stack = new MyStack<>();
         assertTrue(stack.isEmpty());
         assertEquals(0, stack.size());
@@ -50,7 +51,7 @@ class StackTests {
     }
 
     @Test
-    void testGetStack() {
+    void testGetStack() throws MyException {
         IStack<Integer> stack = new MyStack<>();
         stack.push(1);
         stack.push(2);

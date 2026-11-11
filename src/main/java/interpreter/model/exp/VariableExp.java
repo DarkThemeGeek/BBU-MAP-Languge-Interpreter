@@ -16,14 +16,14 @@ public record VariableExp (String variableName) implements  IExp{
     }
 
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable)  {
+    public IValue eval(IDictionary<String, IValue> symTable) throws MyException  {
         if(!symTable.containsKey(variableName)){
             throw new VariableNotDefinedException("variable" + variableName +"is not defined");
         }
         return symTable.get(variableName);
     }
 
-    public IType typecheck(IDictionary<String, IType> typeEnv) {
+    public IType typecheck(IDictionary<String, IType> typeEnv) throws MyException {
         return typeEnv.get(variableName);
     }
 }

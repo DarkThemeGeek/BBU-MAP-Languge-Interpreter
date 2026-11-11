@@ -8,10 +8,11 @@ import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import interpreter.exceptions.MyException;
 
 class ValueExpTests {
     @Test
-    void testEvalIntValue() {
+    void testEvalIntValue() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ValueExp exp = new ValueExp(new IntValue(123));
         IValue result = exp.eval(symTable);
@@ -20,7 +21,7 @@ class ValueExpTests {
     }
 
     @Test
-    void testEvalBoolValue() {
+    void testEvalBoolValue() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         ValueExp exp = new ValueExp(new BoolValue(false));
         IValue result = exp.eval(symTable);
@@ -29,7 +30,7 @@ class ValueExpTests {
     }
 
     @Test
-    void testToString() {
+    void testToString() throws MyException {
         ValueExp exp1 = new ValueExp(new IntValue(42));
         assertEquals("42", exp1.toString());
 

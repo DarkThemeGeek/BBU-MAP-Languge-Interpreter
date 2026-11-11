@@ -1,5 +1,6 @@
 package interpreter.model.stmt;
 
+import interpreter.exceptions.MyException;
 import interpreter.model.prgState.ProgramState;
 import interpreter.exceptions.VariableAlreadyDefinedException;
 import interpreter.model.type.IType;
@@ -7,7 +8,7 @@ import interpreter.model.type.IType;
 public record VariableDeclarationStmt(String variableName,IType type) implements IStmt {
 
     @Override
-    public ProgramState execute(ProgramState programState) {
+    public ProgramState execute(ProgramState programState) throws MyException {
         if (programState.getSymTable().containsKey(variableName)) {
             throw new VariableAlreadyDefinedException(variableName+" already exists");
         }

@@ -23,8 +23,7 @@ public record OpenRFileStmt(IExp exp) implements IStmt { // S8
             var reader = new BufferedReader(new FileReader(fileName.val()));
             fileTable.add(fileName, reader);
         } catch (IOException e) {
-            throw new StmtException("openRFile: cannot open " + fileName
-                    + ": " + e.getMessage());
+            throw new StmtException("openRFile: cannot open " + fileName + ": " + e.getMessage());
         }
         return state;
     }

@@ -1,11 +1,13 @@
 package interpreter.model.adt;
 
+import interpreter.exceptions.MyException;
+
 import java.util.Map;
 import java.util.Set;
 
 public interface IDictionary<TKey,TValue>  {
     public Map<TKey, TValue> getMap();
-    TValue get(TKey key);
+    TValue get(TKey key) throws MyException;
     void add(TKey key, TValue value);
     boolean containsKey(TKey key);
     void remove(TKey key);
@@ -13,5 +15,6 @@ public interface IDictionary<TKey,TValue>  {
     boolean isEmpty();
     IDictionary<TKey, TValue> copy();
     Set<TKey> keySet();
+    //immutable map
     Map<TKey,TValue> toMap();
 }

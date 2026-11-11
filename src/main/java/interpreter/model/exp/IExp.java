@@ -8,6 +8,6 @@ import java.util.Dictionary;
 import java.util.Map;
 
 public interface IExp {
-    IValue eval(IDictionary<String, IValue> symTable) ;
+    IValue eval(IDictionary<String, IValue> symTable) throws MyException;
 
 }
