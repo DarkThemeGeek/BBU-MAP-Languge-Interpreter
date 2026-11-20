@@ -13,14 +13,16 @@ public class ProgramState {
     private MyDictionary<String, IValue> symTable;
     private IList<IValue> out;
     private IDictionary<StringValue, BufferedReader> fileTable;
+    private MyHeap heap;
     private final IStmt originalProgram;
 
-    public ProgramState(MyDictionary<String, IValue> symTable, MyStack<IStmt> exeStack, IList<IValue> out, IStmt originalProgram, MyDictionary<StringValue, BufferedReader> fileTable) {
+    public ProgramState(MyDictionary<String, IValue> symTable, MyStack<IStmt> exeStack, IList<IValue> out, IStmt originalProgram, MyDictionary<StringValue, BufferedReader> fileTable, MyHeap  heap) {
         this.symTable = symTable;
         this.exeStack = exeStack;
         this.out = out;
         this.originalProgram = originalProgram;
         this.fileTable = fileTable;
+        this.heap=heap;
         exeStack.push(originalProgram);
 
     }
@@ -36,6 +38,8 @@ public class ProgramState {
         out.toList().forEach(v -> sb.append(v).append('\n'));
         sb.append("FileTable:\n");
         fileTable.toMap().keySet().forEach(f -> sb.append(f.val()).append('\n'));
+        sb.append("Heap:\n");
+
         return sb.toString();
     }
 
