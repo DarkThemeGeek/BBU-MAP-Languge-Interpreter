@@ -53,6 +53,7 @@ public class ProgramState {
         this.exeStack = new MyStack<>();
         this.symTable = new MyDictionary<>();
         this.fileTable = new MyDictionary<>();
+        this.heap=new MyHeap();
         this.out = new MyList<>();
         exeStack.push(originalProgram);
 
@@ -76,7 +77,9 @@ public class ProgramState {
     public String toString() {
         return "-------Execution Stack-------: \n" + exeStack.toString() +
                 "\n-------Symbol Table-----:\n" + symTable.toString() +
-                "\n--------Output--------: \n" + out.toString();
+                "\n--------Output--------: \n" + out.toString() +
+                "\n--------Heap----------: \n" + heap.toString();
+
     }
 
     public IDictionary<StringValue, BufferedReader> getFileTable() {
