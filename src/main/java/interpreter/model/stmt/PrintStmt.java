@@ -11,7 +11,7 @@ public record PrintStmt(IExp exp) implements IStmt{
     @Override
     public ProgramState execute(ProgramState programState) throws MyException {
         IList<IValue> out = programState.getOut();
-        IValue value = exp.eval(programState.getSymTable());
+        IValue value = exp.eval(programState.getSymTable(), programState.getHeap());
 
         out.add(value);
 

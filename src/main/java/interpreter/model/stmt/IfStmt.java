@@ -13,7 +13,7 @@ public record IfStmt(IExp condition, IStmt stmt1, IStmt stmt2) implements  IStmt
 
     @Override
     public ProgramState execute(ProgramState programState)throws MyException {
-        IValue value = condition.eval(programState.getSymTable());
+        IValue value = condition.eval(programState.getSymTable(), programState.getHeap());
         if (!(value instanceof BoolValue(boolean booleanValue))) {
             throw new InvalidTypeException(condition.toString()+"Is not of type boolean");
         }

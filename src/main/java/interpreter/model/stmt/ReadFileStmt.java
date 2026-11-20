@@ -21,7 +21,7 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
             throw new InvalidTypeException("Wrong type only int values can be read from file");
         }
 
-        if (!(exp.eval(symTable) instanceof StringValue filePath)) {
+        if (!(exp.eval(symTable, programState.getHeap()) instanceof StringValue filePath)) {
             throw new InvalidTypeException("The file path passed is not a valid string");
         }
 

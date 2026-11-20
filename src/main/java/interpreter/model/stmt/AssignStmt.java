@@ -16,7 +16,7 @@ public record AssignStmt(String varName, IExp exp) implements IStmt {
             if (!symTable.containsKey(varName))
                 throw new VariableNotDefinedException("variable " + varName + " was not declared");
 
-            IValue val = exp.eval(symTable);
+            IValue val = exp.eval(symTable,state.getHeap() );
 
             if (!val.getType().equals(symTable.get(varName).getType()))
                 throw new InvalidTypeException("declared type of variable " + varName

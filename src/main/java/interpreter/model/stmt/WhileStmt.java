@@ -11,7 +11,7 @@ public record WhileStmt(IExp cond, IStmt body) implements IStmt { // S13
     @Override
     public ProgramState execute(ProgramState state) throws MyException {
 
-        if (!(cond.eval(state.getSymTable()) instanceof BoolValue condValue)) {
+        if (!(cond.eval(state.getSymTable(),state.getHeap() ) instanceof BoolValue condValue)) {
             throw new InvalidTypeException("expression does not return a boolean value\n");
         }
         // true: push this, then push body; false: do nothing
