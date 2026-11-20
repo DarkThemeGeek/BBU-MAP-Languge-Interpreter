@@ -11,9 +11,9 @@ public record LogicalExp(LogicalOp op,IExp left, IExp right) implements  IExp {
 
     @Override
     public IValue eval(IDictionary<String, IValue> symTable, IHeap heap) throws MyException {
-        if (!(left.eval(symTable, ) instanceof BoolValue(boolean n1)))
+        if (!(left.eval(symTable,heap ) instanceof BoolValue(boolean n1)))
             throw new InvalidTypeException("first operand is not an integer");
-        if (!(right.eval(symTable, ) instanceof BoolValue(boolean n2)))
+        if (!(right.eval(symTable,heap ) instanceof BoolValue(boolean n2)))
             throw new InvalidTypeException("second operand is not an valid expression");
         return switch (op) {
             case AND -> new BoolValue(n1 && n2);
