@@ -19,26 +19,36 @@ public class MyHeap implements IHeap {
 
     @Override
     public IValue get(int address) throws ADTException {
-        return null;
+        if (!heap.containsKey(address)) {
+            throw new ADTException("Address " + address + " is not defined in the heap");
+        }
+        return heap.get(address);
     }
 
     @Override
     public void update(int address, IValue value) throws ADTException {
-
+        if (!heap.containsKey(address)) {
+            throw new ADTException("Address " + address + " is not defined in the heap");
+        }
+        heap.put(address, value);
     }
 
     @Override
     public boolean isDefined(int address) {
-        return false;
+        return heap.containsKey(address);
     }
 
     @Override
     public Map<Integer, IValue> getContent() {
-        return Map.of();
+        return Map.copyOf(heap);
     }
 
     @Override
     public void setContent(Map<Integer, IValue> content) {
         heap = new HashMap<>(content);
+    }
+    @Override
+    public  String toString(){
+        return heap.toString();
     }
 }
