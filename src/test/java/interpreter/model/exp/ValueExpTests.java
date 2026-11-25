@@ -1,7 +1,9 @@
 package interpreter.model.exp;
 
 import interpreter.model.adt.IDictionary;
+import interpreter.model.adt.IHeap;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
@@ -14,8 +16,9 @@ class ValueExpTests {
     @Test
     void testEvalIntValue() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         ValueExp exp = new ValueExp(new IntValue(123));
-        IValue result = exp.eval(symTable);
+        IValue result = exp.eval(symTable, heap);
         assertTrue(result instanceof IntValue);
         assertEquals(123, ((IntValue) result).val());
     }
@@ -23,8 +26,9 @@ class ValueExpTests {
     @Test
     void testEvalBoolValue() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         ValueExp exp = new ValueExp(new BoolValue(false));
-        IValue result = exp.eval(symTable);
+        IValue result = exp.eval(symTable, heap);
         assertTrue(result instanceof BoolValue);
         assertFalse(((BoolValue) result).val());
     }

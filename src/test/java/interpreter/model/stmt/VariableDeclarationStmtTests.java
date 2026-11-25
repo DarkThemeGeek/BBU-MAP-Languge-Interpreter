@@ -2,6 +2,7 @@ package interpreter.model.stmt;
 
 import interpreter.exceptions.VariableAlreadyDefinedException;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.adt.MyList;
 import interpreter.model.adt.MyStack;
 import interpreter.model.exp.ValueExp;
@@ -24,7 +25,7 @@ class VariableDeclarationStmtTests {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         VariableDeclarationStmt declStmt1 = new VariableDeclarationStmt("x", new IntType());
         declStmt1.execute(state);
@@ -38,7 +39,7 @@ class VariableDeclarationStmtTests {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         VariableDeclarationStmt declStmt = new VariableDeclarationStmt("x", new IntType());
         ProgramState result = declStmt.execute(state);
@@ -51,7 +52,7 @@ class VariableDeclarationStmtTests {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         VariableDeclarationStmt declStmt = new VariableDeclarationStmt("flag", new BoolType());
         declStmt.execute(state);

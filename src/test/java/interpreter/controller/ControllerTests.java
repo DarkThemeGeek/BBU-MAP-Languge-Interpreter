@@ -116,6 +116,41 @@ class ControllerTests {
     }
 
     @Test
+    void testRunExample7() throws MyException {
+        Controller controller = new Controller(false);
+        controller.LoadProgram(Example.ex7);
+        controller.allStep();
+
+        var out = controller.getRepo().getProgramState().getOut();
+        assertEquals(2, out.size());
+        assertEquals(20, ((IntValue) out.get(0)).val());
+        assertEquals(25, ((IntValue) out.get(1)).val());
+    }
+
+    @Test
+    void testRunExample8() throws MyException {
+        Controller controller = new Controller(false);
+        controller.LoadProgram(Example.ex8);
+        controller.allStep();
+
+        var out = controller.getRepo().getProgramState().getOut();
+        assertEquals(2, out.size());
+        assertEquals(20, ((IntValue) out.get(0)).val());
+        assertEquals(35, ((IntValue) out.get(1)).val());
+    }
+
+    @Test
+    void testRunExample9() throws MyException {
+        Controller controller = new Controller(false);
+        controller.LoadProgram(Example.ex9);
+        controller.allStep();
+
+        var out = controller.getRepo().getProgramState().getOut();
+        assertEquals(1, out.size());
+        assertEquals(20, ((IntValue) out.get(0)).val());
+    }
+
+    @Test
     void testEmptyExecutionStackThrowsException() throws MyException {
         Controller controller = new Controller(false);
         controller.LoadProgram(Example.ex1);

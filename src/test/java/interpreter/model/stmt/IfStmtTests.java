@@ -2,7 +2,9 @@ package interpreter.model.stmt;
 
 import interpreter.exceptions.InvalidTypeException;
 import interpreter.exceptions.VariableNotDefinedException;
+import interpreter.model.adt.IHeap;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.adt.MyList;
 import interpreter.model.adt.MyStack;
 import interpreter.model.exp.ArithExp;
@@ -13,7 +15,7 @@ import interpreter.model.prgState.ProgramState;
 import interpreter.model.value.StringValue;
 
 import java.io.BufferedReader;
-import interpreter.model.type.IntType;
+
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
@@ -28,7 +30,7 @@ class IfStmtTests {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         // If condition is an integer (not boolean)
         IfStmt ifStmt = new IfStmt(new ValueExp(new IntValue(1)), new PrintStmt(new ValueExp(new IntValue(1))), new PrintStmt(new ValueExp(new IntValue(2))));
@@ -38,27 +40,30 @@ class IfStmtTests {
     @Test
     void testIfConditionWithWrongOperandTypes() {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         // Logical expression but with wrong types
         interpreter.model.exp.LogicalExp badCond = new interpreter.model.exp.LogicalExp(
             interpreter.model.exp.LogicalOp.AND, 
             new ValueExp(new IntValue(1)), 
             new ValueExp(new BoolValue(true))
         );
-        assertThrows(InvalidTypeException.class, () -> badCond.eval(symTable));
+        assertThrows(InvalidTypeException.class, () -> badCond.eval(symTable, heap));
     }
 
     @Test
     void testIfConditionWithDivisionByZero() {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         ArithExp badExp = new ArithExp(ArithOp.DIV, new ValueExp(new IntValue(10)), new ValueExp(new IntValue(0)));
-        assertThrows(interpreter.exceptions.DivisionByZeroException.class, () -> badExp.eval(symTable));
+        assertThrows(interpreter.exceptions.DivisionByZeroException.class, () -> badExp.eval(symTable, heap));
     }
 
     @Test
     void testIfConditionWithUndefinedVariable() {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         VariableExp varExp = new VariableExp("undefinedVar");
-        assertThrows(VariableNotDefinedException.class, () -> varExp.eval(symTable));
+        assertThrows(VariableNotDefinedException.class, () -> varExp.eval(symTable, heap));
     }
 
     @Test
@@ -67,7 +72,7 @@ class IfStmtTests {
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
 
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         IfStmt ifStmt = new IfStmt(new ValueExp(new BoolValue(true)), new PrintStmt(new ValueExp(new IntValue(1))), new PrintStmt(new ValueExp(new IntValue(2))));
         ProgramState result = ifStmt.execute(state);
@@ -80,7 +85,7 @@ class IfStmtTests {
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
 
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         IfStmt ifStmt = new IfStmt(new ValueExp(new BoolValue(false)), new PrintStmt(new ValueExp(new IntValue(1))), new PrintStmt(new ValueExp(new IntValue(2))));
         ProgramState result = ifStmt.execute(state);

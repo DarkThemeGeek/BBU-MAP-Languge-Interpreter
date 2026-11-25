@@ -2,7 +2,9 @@ package interpreter.model.stmt;
 
 import interpreter.exceptions.InvalidTypeException;
 import interpreter.exceptions.VariableNotDefinedException;
+import interpreter.model.adt.IHeap;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.adt.MyList;
 import interpreter.model.adt.MyStack;
 import interpreter.model.exp.ArithExp;
@@ -28,7 +30,7 @@ class AssignStmtTests {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new NoOperationStmt(new PrintStmt(new ValueExp(new IntValue(0)))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new NoOperationStmt(new PrintStmt(new ValueExp(new IntValue(0)))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         AssignStmt assignStmt = new AssignStmt("x", new ValueExp(new IntValue(5)));
         assertThrows(VariableNotDefinedException.class, () -> assignStmt.execute(state));
@@ -39,7 +41,7 @@ class AssignStmtTests {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         // Declare x as int
         VariableDeclarationStmt declStmt = new VariableDeclarationStmt("x", new IntType());
@@ -54,44 +56,47 @@ class AssignStmtTests {
     @Test
     void testAssignmentWithWrongOperandTypeInExpression() throws MyException {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         VariableDeclarationStmt declStmt = new VariableDeclarationStmt("x", new IntType());
         declStmt.execute(state);
         
         // Expression has wrong operand type
         ArithExp badExp = new ArithExp(ArithOp.ADD, new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(3)));
-        assertThrows(InvalidTypeException.class, () -> badExp.eval(symTable));
+        assertThrows(InvalidTypeException.class, () -> badExp.eval(symTable, heap));
     }
 
     @Test
     void testAssignmentWithDivisionByZero() throws MyException {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         VariableDeclarationStmt declStmt = new VariableDeclarationStmt("x", new IntType());
         declStmt.execute(state);
         
         ArithExp badExp = new ArithExp(ArithOp.DIV, new ValueExp(new IntValue(10)), new ValueExp(new IntValue(0)));
-        assertThrows(interpreter.exceptions.DivisionByZeroException.class, () -> badExp.eval(symTable));
+        assertThrows(interpreter.exceptions.DivisionByZeroException.class, () -> badExp.eval(symTable, heap));
     }
 
     @Test
     void testAssignmentWithUndefinedVariableInExpression() throws MyException {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
+        IHeap heap = new MyHeap();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         VariableDeclarationStmt declStmt = new VariableDeclarationStmt("x", new IntType());
         declStmt.execute(state);
         
         VariableExp badExp = new VariableExp("y");
-        assertThrows(VariableNotDefinedException.class, () -> badExp.eval(symTable));
+        assertThrows(VariableNotDefinedException.class, () -> badExp.eval(symTable, heap));
     }
 
     @Test
@@ -99,7 +104,7 @@ class AssignStmtTests {
         MyDictionary<String, IValue> symTable = new MyDictionary<>();
         MyStack<IStmt> exeStack = new MyStack<>();
         MyList<IValue> out = new MyList<>();
-        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>());
+        ProgramState state = new ProgramState(symTable, exeStack, out, new PrintStmt(new ValueExp(new IntValue(0))), new MyDictionary<StringValue, BufferedReader>(), new MyHeap());
         
         VariableDeclarationStmt declStmt = new VariableDeclarationStmt("x", new IntType());
         declStmt.execute(state);

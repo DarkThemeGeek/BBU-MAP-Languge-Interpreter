@@ -22,11 +22,13 @@ class RepoTests {
         int symTable = log.indexOf("SymTable:");
         int out = log.indexOf("Out:");
         int fileTable = log.indexOf("FileTable:");
+        int heap = log.indexOf("Heap:");
 
         assertTrue(exeStack >= 0, "missing ExeStack section");
         assertTrue(symTable > exeStack, "SymTable must come after ExeStack");
         assertTrue(out > symTable, "Out must come after SymTable");
         assertTrue(fileTable > out, "FileTable must come after Out");
+        assertTrue(heap > fileTable, "Heap must come after FileTable");
     }
 
     @Test
