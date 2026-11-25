@@ -9,6 +9,8 @@ import interpreter.repository.Repo;
 import interpreter.view.old.ILogger;
 import interpreter.view.old.Logger;
 
+import static interpreter.controller.GarbageCollector.getAddrFromSymTable;
+
 public class Controller {
     private IRepo repo;
     private boolean displayFlag;
@@ -44,16 +46,20 @@ public class Controller {
         ProgramState state = repo.getProgramState();
         if(displayFlag){
             repo.logProgramStateExec();
-            // repo.logToConsole();
+             repo.logToConsole();
         }; // only if the display flag is on
 
         while (!state.getExeStack().isEmpty()) {
 
             oneStep();
+            state.getHeap().setContent(GarbageCollector.safeGarbageCollector(
+                    getAddrFromSymTable(state.getSymTable().toMap().values()),
+                    state.getHeap().getContent()));
+
             if(displayFlag){
                 repo.logProgramStateExec();
-              //  repo.logToConsole();
-            };
+                repo.logToConsole();
+            }
         }
     }
     public void LoadProgram(IStmt program){
